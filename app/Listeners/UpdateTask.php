@@ -4,8 +4,6 @@ namespace App\Listeners;
 
 use App\Events\TaskTrigger;
 use App\Models\Task;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\DB;
 
 class UpdateTask

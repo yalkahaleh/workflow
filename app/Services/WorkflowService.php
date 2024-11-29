@@ -6,7 +6,6 @@ use App\Events\TaskTrigger;
 use App\Models\HistoryLog;
 use App\Models\Task;
 use App\Models\Workflow;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class WorkflowService
@@ -49,7 +48,7 @@ class WorkflowService
                         $workflow->condition->value)->count();
                     TaskTrigger::dispatch($workflow);
                 } catch (\Exception $e) {
-
+                    $effectedRows = 0;
                     $status = "failure";
                     $error_message = $e->getMessage();
                 }
