@@ -129,8 +129,8 @@ These workflows ensure that various conditions and actions are tested, including
 
 1. **Clone the Repository**:
    ```bash
-   git clone <repository-url>
-   cd <project-directory>
+   git clone https://github.com/yalkahaleh/workflow.git
+   cd workflow
    ```
 
 2. **Install Dependencies**:
