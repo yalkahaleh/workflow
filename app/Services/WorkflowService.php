@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Events\TaskTrigger;
 use App\Models\HistoryLog;
 use App\Models\Task;
 use App\Models\Workflow;
@@ -34,9 +35,6 @@ class WorkflowService
     {
         $conditionState = $this->evaluateCondition($id);
         $workflow = $this->findWorkflowById($id);
-        $field = $workflow->condition->field;
-        $operation = $workflow->condition->operation;
-        $value = $workflow->condition->value;
 
         $error_message = null;
         $effectedRows = 0;
@@ -45,15 +43,13 @@ class WorkflowService
             $actionType = $workflow->action->action_type;
             $status = "success";
             if ($actionType === 'update_field') {
-                $targetField = $workflow->action->target_field;
-                $newValue = $workflow->action->value;
+
                 try {
-                    DB::beginTransaction();
-                    $effectedRows = Task::where($field, $operation, $value)
-                        ->update([$targetField => $newValue]);
-                    DB::commit();
+                    $effectedRows = Task::where($workflow->condition->field, $workflow->condition->operation,
+                        $workflow->condition->value)->count();
+                    TaskTrigger::dispatch($workflow);
                 } catch (\Exception $e) {
-                    DB::rollBack();
+
                     $status = "failure";
                     $error_message = $e->getMessage();
                 }
