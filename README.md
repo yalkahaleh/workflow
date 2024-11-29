@@ -31,6 +31,15 @@ This project is built using **Laravel 9** and follows a structured architecture 
         - Evaluating conditions based on workflow rules.
         - Executing actions, including database updates and logging.
 
+4. **Events and Listeners**:
+    - **TaskTrigger Event**:
+        - Dispatched when a workflow's task update action needs to be executed.
+        - Includes the workflow object, which contains details about the condition and action.
+    - **UpdateTask Listener**:
+        - Handles the `TaskTrigger` event by:
+            1. Retrieving the condition details from the workflow.
+            2. Executing the update action based on the specified field, operation, and value.
+            3. Ensuring atomicity using a database transaction to handle potential failures.
 ---
 
 ## Database Schema
