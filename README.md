@@ -140,7 +140,7 @@ These workflows ensure that various conditions and actions are tested, including
 
 3. **Set Up Environment**:
     - Copy `.env.example` to `.env`.
-    - Update database and other configurations.
+    - Update database.
 
 
 4. **Run Migrations**:
